@@ -3,6 +3,13 @@ let matched = [];
 
 function start() {
   /*
+   *renew the score Panel
+   */
+
+   $(".stars").empty();
+   $(".moves").text("0");
+
+  /*
    * Create a list that holds all of your cards
    */
   let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt",
@@ -92,4 +99,5 @@ function shuffle(array) {
     return array;
 }
 
+$(".restart").click(start);
 start();
