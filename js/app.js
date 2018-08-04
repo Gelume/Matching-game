@@ -2,6 +2,7 @@ let openedCard = "";
 let matched = [];
 
 function start() {
+
   /*
    *renew the score Panel
    */
@@ -39,19 +40,24 @@ function start() {
      matched.push(card);
      // check victory
      displayMatch(target);
+     addMove();
    } else {
      displayOpen(target);
      openedCard = "";
      displayNotMatch();
+     addMove();
+
    }
  }
 
  function displayOpen(target) {
    target.addClass("open");
+
  }
 
  function displayMatch(target) {
-
+   target.addClass("match");
+   $(".open").addClass("match").removeClass("open");
  }
 
  function displayNotMatch() {
@@ -73,6 +79,13 @@ function start() {
    $("ul.deck").html(html);
  }
 
+ // increment the move counter
+
+  function addMove (){
+    let moveCount = parseInt(($(".moves").text()), 10);
+    moveCount += 1;
+    $(".moves").text(moveCount);
+  }
  /*
   * set up the event listener for a card. If a card is clicked:
   *  - display the card's symbol (put this functionality in another function that you call from this one)
