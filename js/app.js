@@ -61,7 +61,9 @@ function start() {
  }
 
  function displayNotMatch() {
+   $("li.open").addClass("wrong");
    setTimeout(() => $("li.open").removeClass("open"), 300);
+   setTimeout(() => $("li.wrong").removeClass("wrong"), 300);
  }
 
  // functions library
