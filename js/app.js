@@ -1,20 +1,22 @@
-let openedCard = "";
-let matched = [];
+let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt",
+             "fa-cube", "fa-leaf", "fa-bomb", "fa-bicycle"];
+
+let openedCard;
+let matched;
+let movesCounter;
+let starsCounter;
 
 function start() {
+   $(".modal-background").addClass("hide");
 
-  /*
-   *renew the score Panel
-   */
+   movesCounter = 0;
+   $(".moves").text(movesCounter);
 
-   $(".stars").empty();
-   $(".moves").text("0");
+   starsCounter = 3;
+   $('.fa-star').removeClass("hide");
 
-  /*
-   * Create a list that holds all of your cards
-   */
-  let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt",
-               "fa-cube", "fa-leaf", "fa-bomb", "fa-bicycle"];
+   matched = [];
+   openedCard = "";
 
   /*
    * Display the cards on the page
@@ -30,40 +32,45 @@ function start() {
 
  function open(e) {
    let target = $(e.target);
+
+   // if card is already open return
+   if (target.hasClass("open") || target.hasClass("matched")) {
+     return;
+   }
+
+   // opening the card, getting the card symbol
+   target.addClass("open");
    card = target.data("card");
 
+   // if no card open store the new card as opened and return
    if (!openedCard) {
      openedCard = card;
-     displayOpen(target);
-   } else if (openedCard === card) {
-     openedCard = "";
-     matched.push(card);
-     // check victory
-     displayMatch(target);
-     addMove();
-   } else {
-     displayOpen(target);
-     openedCard = "";
-     displayNotMatch();
-     addMove();
-
+     return;
    }
- }
 
- function displayOpen(target) {
-   target.addClass("open");
+   // increase move counter
+   addMove();
 
- }
+   // if new card is equal to the opened card, register match
+   if (openedCard === card) {
+     matched.push(card);
+     $(".open").addClass("matched").removeClass("open");
 
- function displayMatch(target) {
-   target.addClass("match");
-   $(".open").addClass("match").removeClass("open");
- }
+     // check victory
+     if (matched.length === 8){
+       $('#winnerScore').text(`You made ${movesCounter} moves and you have ${starsCounter} stars left`);
+       $(".modal-background").removeClass("hide");
+       $('.modal-close').click(function(){$('.modal-background').addClass("hide")});
+     }
 
- function displayNotMatch() {
-   $("li.open").addClass("wrong");
-   setTimeout(() => $("li.open").removeClass("open"), 300);
-   setTimeout(() => $("li.wrong").removeClass("wrong"), 300);
+  // otherwise cards are not matched
+   } else {
+     $("li.open").addClass("wrong");
+     setTimeout(() => $("li.wrong").removeClass("open wrong"), 400);
+   }
+
+   // clear opened card
+   openedCard = "";
  }
 
  // functions library
@@ -84,10 +91,15 @@ function start() {
  // increment the move counter
 
   function addMove (){
-    let moveCount = parseInt(($(".moves").text()), 10);
-    moveCount += 1;
-    $(".moves").text(moveCount);
+    movesCounter += 1;
+    $(".moves").text(movesCounter);
+
+    if (movesCounter === 16 || movesCounter === 24){
+      starsCounter--;
+      $('.fa-star').not(".fa-star.hide").first().addClass("hide");
+    }
   }
+
  /*
   * set up the event listener for a card. If a card is clicked:
   *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -114,5 +126,9 @@ function shuffle(array) {
     return array;
 }
 
-$(".restart").click(start);
+/*$('.modal-close')click(function(){
+  $(''.modal-background').addClass("hide");
+})*/
+
+$(".restart, .playAgain").click(start);
 start();

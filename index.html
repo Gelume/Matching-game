@@ -17,8 +17,9 @@
         <section class="score-panel">
         	<ul class="stars">
         		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+            <li><i class="fa fa-star"></i></li>
+
         	</ul>
 
         	<span class="moves"></span> Moves
@@ -40,6 +41,22 @@
                 <i class="fa fa-bolt"></i>
             </li>
         </ul>
+    </div>
+
+<!-- victory box, this should appear after the game is over above the page -->
+    <div class='modal-background'>
+      <div class='modal-box'>
+        <div class='modal-heading'>
+          <h1>Congratulations! You Won!</h1>
+          <span class='modal-close'>x</span>
+        </div>
+        <div>
+          <p id="winnerScore"></p>
+          <div class='button'>
+            <button class="playAgain">Play again!</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

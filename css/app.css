@@ -17,6 +17,7 @@ body {
 }
 
 body {
+    position: relative;
     background: #ffffff url('../img/geometry2.png'); /* Background pattern from Subtle Patterns */
     font-family: 'Coda', cursive;
 }
@@ -76,12 +77,15 @@ h1 {
     font-size: 33px;
 } */
 
-.deck .card.match {
+.deck .card.matched {
     cursor: default;
     background: #02ccba;
     font-size: 33px;
 }
 
+.deck .card.wrong {
+    background: #ea4674;
+}
 /*
  * Styles for the Score Panel
  */
@@ -107,4 +111,47 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/* Here is styling for the victory box */
+
+.modal-background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.modal-box {
+  position: relative;
+  margin: 200px auto auto auto;
+  padding: 15px;
+  width: 400px;
+  height: auto;
+  background-color: #2cbaa4;
+  border-radius: 10px;
+
+}
+
+.modal-heading {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid gray;
+}
+
+.hide {
+  display: none;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.modal-close {
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
 }
