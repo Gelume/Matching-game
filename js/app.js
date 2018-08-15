@@ -1,12 +1,15 @@
-let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt",
+ let cards = ["fa-diamond", "fa-paper-plane-o", "fa-anchor", "fa-bolt",
              "fa-cube", "fa-leaf", "fa-bomb", "fa-bicycle"];
 
 let openedCard;
 let matched;
 let movesCounter;
 let starsCounter;
+let timerId;
 
 function start() {
+   clearTimer();
+
    $(".modal-background").addClass("hide");
 
    movesCounter = 0;
@@ -31,6 +34,8 @@ function start() {
  }
 
  function open(e) {
+   startTimer();
+
    let target = $(e.target);
 
    // if card is already open return
@@ -58,9 +63,12 @@ function start() {
 
      // check victory
      if (matched.length === 8){
-       $('#winnerScore').text(`You made ${movesCounter} moves and you have ${starsCounter} stars left`);
+       //clearInterval(timerId);
+       let time = getGameTime();
+       $('#winnerScore').text(`You made ${movesCounter} moves in ${time} and you have ${starsCounter} stars left`);
        $(".modal-background").removeClass("hide");
        $('.modal-close').click(function(){$('.modal-background').addClass("hide")});
+       stopTimer();
      }
 
   // otherwise cards are not matched
@@ -71,6 +79,7 @@ function start() {
 
    // clear opened card
    openedCard = "";
+
  }
 
  // functions library
@@ -113,7 +122,7 @@ function start() {
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    let currentIndex = array.length, temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -125,10 +134,47 @@ function shuffle(array) {
 
     return array;
 }
+// counts time of the game
 
-/*$('.modal-close')click(function(){
-  $(''.modal-background').addClass("hide");
-})*/
+function startTimer() {
+  if (timerId) {
+    return;
+  }
+
+  let seconds = 0;
+  timerId = setInterval(() => {
+    seconds += 1;
+    displayTimer(seconds);
+
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(timerId);
+  timerId = null;
+}
+
+function clearTimer() {
+  stopTimer();
+  seconds = 0;
+  displayTimer(seconds);
+}
+
+ // displays time on the score Panel
+ function displayTimer(timer) {
+   let minutes = Math.floor(timer / 60);
+   minutes = minutes < 10 ? `0${minutes}` : minutes;
+
+   let seconds = timer % 60
+   seconds = seconds < 10 ? `0${seconds}` : seconds;
+
+   $(".timer").text(`${minutes}:${seconds}`);
+ }
+
+ function getGameTime() {
+    let time = $(".timer").text();
+    return time;
+ }
 
 $(".restart, .playAgain").click(start);
 start();
