@@ -17,4 +17,4 @@ Open all the pairs for as less moves as possible.
 You loose first stars when you make 16 moves.
 The second star will be gone after 24 moves.
 
---Good Luck-- :+1: --!--
+**Good Luck!**
